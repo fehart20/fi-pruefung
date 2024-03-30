@@ -1,0 +1,28 @@
+name: Deploy to FHCOM Server
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test-deploy:
+    name: Deployment
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          cache: npm
+      - run: npm ci
+      - run: npm run build
+      - name: SSH deploy to server
+        uses: easingthemes/ssh-deploy@v4.1.9
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          REMOTE_HOST: ${{ secrets.SSH_HOST }}
+          REMOTE_USER: ${{ secrets.SSH_USER }}
+          REMOTE_PORT: ${{ secrets.SSH_PORT }}
+          TARGET: ${{ secrets.PUB_DIR }}
+          SOURCE: ./build/
