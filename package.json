@@ -14,7 +14,6 @@
     "write-heading-ids": "docusaurus write-heading-ids"
   },
   "dependencies": {
-    "@agentofuser/remark-oembed": "^1.0.4",
     "@docusaurus/core": "3.2.0",
     "@docusaurus/preset-classic": "3.2.0",
     "@mdx-js/react": "^3.0.0",
